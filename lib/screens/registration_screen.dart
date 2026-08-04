@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 
-
-
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
 
@@ -18,13 +16,23 @@ class RegistrationScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "GymPulse",
-                style: TextStyle(
-                  color: kLightAccentColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(
+                    image: AssetImage("assets/images/GymPulse_icon.png"),
+                    width: 100,
+                    height: 100,
+                  ),
+                  Text(
+                    "GymPulse",
+                    style: TextStyle(
+                      color: kLightAccentColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35,
+                    ),
+                  ),
+                ],
               ),
               Text(
                 "Join Thousands Of BodyBuilders",

@@ -16,13 +16,23 @@ class LoginScreen extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "GymPulse",
-              style: TextStyle(
-                color: kLightAccentColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage("assets/images/GymPulse_icon.png"),
+                  width: 100,
+                  height: 100,
+                ),
+                Text(
+                  "GymPulse",
+                  style: TextStyle(
+                    color: kLightAccentColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                  ),
+                ),
+              ],
             ),
             Text(
               "Welcome Back",
