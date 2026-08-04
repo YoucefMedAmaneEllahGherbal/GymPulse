@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/screens/landing_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:gympulse_app/screens/registration_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
