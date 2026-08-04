@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/screens/home_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:gympulse_app/screens/registration_screen.dart';
 
@@ -14,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: RegistrationScreen(),
-      initialRoute: LoginScreen.id,
+      
 
       routes: {
+        HomeScreen.id : (context) => HomeScreen(),
         LoginScreen.id :(context) => LoginScreen(),
         RegistrationScreen.id :(context) => RegistrationScreen(),
 
