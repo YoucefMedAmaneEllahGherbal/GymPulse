@@ -14,6 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: RegistrationScreen(),
+      initialRoute: LoginScreen.id,
+
+      routes: {
+        LoginScreen.id :(context) => LoginScreen(),
+        RegistrationScreen.id :(context) => RegistrationScreen(),
+
+      },
     );
   }
 }
