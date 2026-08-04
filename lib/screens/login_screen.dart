@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const String id = "LoginScreen";
 
@@ -105,7 +106,34 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+            Text(
+              "or login with : ",
+              style: TextStyle(
+                color: kLightAccentColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: FaIcon(
+                    FontAwesomeIcons.googlePlus,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: FaIcon(FontAwesomeIcons.facebook, color: Colors.blue),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: FaIcon(FontAwesomeIcons.github, color: Colors.white),
+                ),
+              ],
+            ),
           ],
         ),
       ),
