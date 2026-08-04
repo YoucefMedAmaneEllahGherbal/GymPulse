@@ -36,13 +36,8 @@ class LoginScreen extends StatelessWidget {
               child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  hintText: "Enter Your Email",
-                  filled: true,
-                  fillColor: kLightAccentColor,
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: "Enter Your E-mail",
                 ),
               ),
             ),
@@ -54,13 +49,8 @@ class LoginScreen extends StatelessWidget {
               child: TextField(
                 obscureText: true,
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+                decoration: kTextFieldDecoration.copyWith(
                   hintText: "Enter Your Password",
-                  filled: true,
-                  fillColor: kLightAccentColor,
                 ),
               ),
             ),
