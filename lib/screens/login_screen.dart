@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 
+String id = "LoginScreen";
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
