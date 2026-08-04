@@ -22,8 +22,8 @@ class LandingScreen extends StatelessWidget {
                   tag: 'logo',
                   child: Image(
                     image: AssetImage("assets/images/GymPulse_icon.png"),
-                    width: 100,
-                    height: 100,
+                    width: 120,
+                    height: 120,
                   ),
                 ),
                 Text(
@@ -37,7 +37,7 @@ class LandingScreen extends StatelessWidget {
               ],
             ),
             Text(
-              "Track , Train , Transform.",
+              "Track • Train • Transform.",
               style: TextStyle(
                 color: kLightAccentColor,
                 fontWeight: FontWeight.bold,
@@ -90,6 +90,16 @@ class LandingScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(),
+            Text(
+              "Terms of Services • Privacy Policy",
+              style: TextStyle(
+                color: kLightAccentColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: 15),
           ],
         ),
       ),
