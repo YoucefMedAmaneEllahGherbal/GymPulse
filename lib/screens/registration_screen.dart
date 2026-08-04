@@ -19,10 +19,13 @@ class RegistrationScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(
-                    image: AssetImage("assets/images/GymPulse_icon.png"),
-                    width: 100,
-                    height: 100,
+                  Hero(
+                    tag: 'logo',
+                    child: Image(
+                      image: AssetImage("assets/images/GymPulse_icon.png"),
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                   Text(
                     "GymPulse",

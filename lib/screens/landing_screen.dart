@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
+import 'package:gympulse_app/screens/login_screen.dart';
+import 'package:gympulse_app/screens/registration_screen.dart';
 
-const String id = "LoginScreen";
-
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-
-  static const String id = "LoginScreen";
+class LandingScreen extends StatelessWidget {
+  const LandingScreen({super.key});
+  static String id = 'HomeScreen';
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: Column(
+    return Scaffold(
+      backgroundColor: kBackgroundColor,
+      body: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
@@ -38,36 +37,33 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
             Text(
-              "Welcome Back",
+              "Track , Train , Transform.",
               style: TextStyle(
                 color: kLightAccentColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
+            SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 8,
-              ),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                decoration: kTextFieldDecoration.copyWith(
-                  hintText: "Enter Your E-mail",
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 8,
-              ),
-              child: TextField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                decoration: kTextFieldDecoration.copyWith(
-                  hintText: "Enter Your Password",
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(kAccentColor),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, LoginScreen.id);
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -80,28 +76,17 @@ class LoginScreen extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(kAccentColor),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, RegistrationScreen.id);
+                  },
                   child: Text(
-                    "Login",
+                    "Register",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                print("forgot password button pressed ");
-              },
-              child: Text(
-                "Forgot your password?",
-                style: TextStyle(
-                  color: kLightAccentColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
