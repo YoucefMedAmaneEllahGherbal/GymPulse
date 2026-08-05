@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/text_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const String id = "LoginScreen";
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
   static const String id = "LoginScreen";
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,8 +64,18 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFieldWidget("Enter Your E-mail"),
-                  TextFieldWidget("Enter Your Password"),
+                  TextFieldWidget(
+                    "Enter Your E-mail",
+                    TextInputType.emailAddress,
+                    false,
+                    (value) {},
+                  ),
+                  TextFieldWidget(
+                    "Enter Your Password",
+                    TextInputType.text,
+                    true,
+                    (value) {},
+                  ),
                   SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

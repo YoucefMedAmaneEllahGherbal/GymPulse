@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/screens/home_screen.dart';
 import 'package:gympulse_app/screens/landing_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:gympulse_app/screens/registration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -15,12 +20,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Poppins'),
       home: LandingScreen(),
 
       routes: {
         LandingScreen.id: (context) => LandingScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        HomeScreen.id: (context) => HomeScreen(),
       },
     );
   }

@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
+import 'package:gympulse_app/screens/home_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/text_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
   static const String id = "RegistrationScreen";
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  String? email;
+
+  String? userName;
+
+  String? password;
+
+  String? confirmationPassword;
+
+  String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +76,46 @@ class RegistrationScreen extends StatelessWidget {
 
                 child: Column(
                   children: [
-                    TextFieldWidget("Enter Your E-mail"),
-                    TextFieldWidget("Enter Your Username"),
-                    TextFieldWidget("Enter Your Phone Number"),
-                    TextFieldWidget("Enter Your Password"),
-                    TextFieldWidget("Enter Your Password"),
+                    TextFieldWidget(
+                      "Enter Your E-mail",
+                      TextInputType.emailAddress,
+                      false,
+                      (value) {
+                        email = value;
+                      },
+                    ),
+                    TextFieldWidget(
+                      "Enter Your Username",
+                      TextInputType.text,
+                      false,
+                      (value) {
+                        userName = value;
+                      },
+                    ),
+                    TextFieldWidget(
+                      "Enter Your Phone Number",
+                      TextInputType.phone,
+                      false,
+                      (value) {
+                        phoneNumber = value;
+                      },
+                    ),
+                    TextFieldWidget(
+                      "Enter Your Password",
+                      TextInputType.text,
+                      true,
+                      (value) {
+                        password = value;
+                      },
+                    ),
+                    TextFieldWidget(
+                      "Enter Your Password",
+                      TextInputType.text,
+                      true,
+                      (value) {
+                        confirmationPassword = value;
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -75,7 +129,20 @@ class RegistrationScreen extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(kAccentColor),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        final newUser = await _auth
+                            .createUserWithEmailAndPassword(
+                              email: email!,
+                              password: password!,
+                            );
+                        if (newUser != null && password == confirmationPassword) {
+                          Navigator.pushNamed(context, HomeScreen.id);
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     child: Text(
                       "Register",
                       style: TextStyle(
