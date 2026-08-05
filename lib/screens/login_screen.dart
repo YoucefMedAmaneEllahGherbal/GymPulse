@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gympulse_app/screens/home/home_screen.dart';
 import '../widgets/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -16,6 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,13 +72,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Enter Your E-mail",
                     TextInputType.emailAddress,
                     false,
-                    (value) {},
+                    (value) {
+                      email = value;
+                    },
                   ),
                   TextFieldWidget(
                     "Enter Your Password",
                     TextInputType.text,
                     true,
-                    (value) {},
+                    (value) {
+                      password = value;
+                    },
                   ),
                   SizedBox(height: 15),
                   Padding(
@@ -85,7 +93,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(kAccentColor),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            final user = await _auth.signInWithEmailAndPassword(
+                              email: email!,
+                              password: password!,
+                            );
+                            if (user != null) {
+                              Navigator.pushNamed(context, HomeScreen.id);
+                            }
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
                         child: Text(
                           "Login",
                           style: TextStyle(

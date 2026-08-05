@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gympulse_app/screens/home_screen.dart';
+import 'package:gympulse_app/screens/home/analytics_page.dart';
+import 'package:gympulse_app/screens/home/home_content.dart';
+import 'package:gympulse_app/screens/home/home_screen.dart';
 import 'package:gympulse_app/screens/landing_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:gympulse_app/screens/registration_screen.dart';
@@ -8,7 +10,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         HomeScreen.id: (context) => HomeScreen(),
+        HomeContent.id: (context) => HomeContent(),
+        AnalyticsPage.id: (context) => AnalyticsPage(),
       },
     );
   }
