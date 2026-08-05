@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1088104202247",
-    "project_id": "gympulse-72dc8",
-    "storage_bucket": "gympulse-72dc8.firebasestorage.app"
+    "project_number": "513112133206",
+    "project_id": "gympulse-3ea43",
+    "storage_bucket": "gympulse-3ea43.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088104202247:android:addf0470ed343ca2696aa2",
+        "mobilesdk_app_id": "1:513112133206:android:13860ae30aecfc860a35f7",
         "android_client_info": {
           "package_name": "com.joseph.gympulse_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAvjAb7SijLcLcXMqNK1Q1KaEhg2VnszE8"
+          "current_key": "AIzaSyBZNk8rEE1EJEgXb0cunza4oJxpFVHq1QY"
         }
       ],
       "services": {
