@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../widgets/text_field_widget.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
@@ -46,70 +47,13 @@ class RegistrationScreen extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 8,
-                ),
-                child: TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: "Enter Your E-mail",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 8,
-                ),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: "Enter Your Username",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 8,
-                ),
-                child: TextField(
-                  keyboardType: TextInputType.phone,
-                  textAlign: TextAlign.center,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: "Enter Your Phone Number",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 8,
-                ),
-                child: TextField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: "Enter Your Password",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 8,
-                ),
-                child: TextField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: "Confirm Your Password",
-                  ),
-                ),
-              ),
+
+              TextFieldWidget("Enter Your E-mail"),
+              TextFieldWidget("Enter Your Username"),
+              TextFieldWidget("Enter Your Phone Number"),
+              TextFieldWidget("Enter Your Password"),
+              TextFieldWidget("Enter Your Password"),
+
               SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -145,32 +89,45 @@ class RegistrationScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "or register with : ",
+                "Or register with : ",
                 style: TextStyle(
                   color: kLightAccentColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(
-                      FontAwesomeIcons.googlePlus,
-                      color: Colors.white,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kSecondaryColor,
+                ),
+                width: 170,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: FaIcon(
+                        FontAwesomeIcons.googlePlus,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(FontAwesomeIcons.facebook, color: Colors.blue),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(FontAwesomeIcons.github, color: Colors.white),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {},
+                      icon: FaIcon(
+                        FontAwesomeIcons.facebook,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: FaIcon(
+                        FontAwesomeIcons.github,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
