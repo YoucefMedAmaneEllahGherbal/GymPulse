@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../widgets/text_field_widget.dart';
 
 const String id = "LoginScreen";
 
@@ -51,38 +52,14 @@ class LoginScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: kSecondaryColor,
               ),
-              height: 270,
-              width: 350,
+              margin: const EdgeInsets.symmetric(horizontal: 25),
+              width: double.infinity,
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 8,
-                    ),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      textAlign: TextAlign.center,
-                      decoration: kTextFieldDecoration.copyWith(
-                        hintText: "Enter Your E-mail",
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 8,
-                    ),
-                    child: TextField(
-                      obscureText: true,
-                      textAlign: TextAlign.center,
-                      decoration: kTextFieldDecoration.copyWith(
-                        hintText: "Enter Your Password",
-                      ),
-                    ),
-                  ),
+                  TextFieldWidget("Enter Your E-mail"),
+                  TextFieldWidget("Enter Your Password"),
                   SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

@@ -47,12 +47,24 @@ class RegistrationScreen extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kSecondaryColor,
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
+                width: double.infinity,
 
-              TextFieldWidget("Enter Your E-mail"),
-              TextFieldWidget("Enter Your Username"),
-              TextFieldWidget("Enter Your Phone Number"),
-              TextFieldWidget("Enter Your Password"),
-              TextFieldWidget("Enter Your Password"),
+                child: Column(
+                  children: [
+                    TextFieldWidget("Enter Your E-mail"),
+                    TextFieldWidget("Enter Your Username"),
+                    TextFieldWidget("Enter Your Phone Number"),
+                    TextFieldWidget("Enter Your Password"),
+                    TextFieldWidget("Enter Your Password"),
+                  ],
+                ),
+              ),
 
               SizedBox(height: 15),
               Padding(
