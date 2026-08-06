@@ -4,10 +4,16 @@ import 'package:gympulse_app/screens/home/bottom_navbar.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AnalyticsPage extends StatelessWidget {
+class AnalyticsPage extends StatefulWidget {
   const AnalyticsPage({Key? key}) : super(key: key);
 
   static String id = 'AnalyticPage';
+
+  @override
+  State<AnalyticsPage> createState() => _AnalyticsPageState();
+}
+
+class _AnalyticsPageState extends State<AnalyticsPage> {
   final _auth = FirebaseAuth.instance;
 
   @override

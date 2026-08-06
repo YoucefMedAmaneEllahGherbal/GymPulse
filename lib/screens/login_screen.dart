@@ -16,6 +16,16 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+String getError(FirebaseAuthException e) {
+  if (e.code == "invalid-credential") {
+    return "invalid-credential";
+  }
+  if (e.code == "network-request-failed") {
+    return "Network error";
+  }
+  return "";
+}
+
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String? email;
@@ -102,8 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (user != null) {
                               Navigator.pushNamed(context, HomeScreen.id);
                             }
-                          } catch (e) {
-                            print(e);
+                          } on FirebaseAuthException catch (e) {
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(SnackBar(content: Text(getError(e))));
                           }
                         },
                         child: Text(
