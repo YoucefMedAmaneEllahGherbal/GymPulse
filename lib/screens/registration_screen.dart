@@ -40,12 +40,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Hero(
-                    tag: 'logo',
-                    child: Image(
-                      image: AssetImage("assets/images/GymPulse_icon.png"),
-                      width: 100,
-                      height: 100,
+                  Flexible(
+                    child: Hero(
+                      tag: 'logo',
+                      child: Image(
+                        image: AssetImage("assets/images/GymPulse_icon.png"),
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                   ),
                   Text(
@@ -136,7 +138,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               email: email!,
                               password: password!,
                             );
-                        if (newUser != null && password == confirmationPassword) {
+                        if (newUser != null &&
+                            password == confirmationPassword) {
                           Navigator.pushNamed(context, HomeScreen.id);
                         }
                       } catch (e) {
