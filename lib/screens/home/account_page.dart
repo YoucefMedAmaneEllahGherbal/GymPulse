@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-class AccountPage extends StatelessWidget {
-  final VoidCallback onSignOut;
-  const AccountPage({Key? key, required this.onSignOut}) : super(key: key);
 
+class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +20,9 @@ class AccountPage extends StatelessWidget {
           ),
           SizedBox(height: 18),
           ElevatedButton(
-            onPressed: onSignOut,
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: kAccentColor,
               foregroundColor: kBackgroundColor,

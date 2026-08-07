@@ -6,7 +6,9 @@ import '../../constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class BottomNavbar extends StatefulWidget {
-  const BottomNavbar({super.key});
+  const BottomNavbar({required this.updateIndex});
+
+  final void Function(int pageIndex) updateIndex;
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
@@ -46,7 +48,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             tabs: [
               GButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, HomeScreen.id);
+                  widget.updateIndex(0);
                 },
                 icon: IconData(
                   FontAwesomeIcons.house.codePoint,
@@ -57,7 +59,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
               GButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, AnalyticsPage.id);
+                  widget.updateIndex(1);
                 },
                 icon: IconData(
                   FontAwesomeIcons.chartBar.codePoint,
@@ -68,7 +70,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
               GButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, HomeScreen.id);
+                  widget.updateIndex(2);
                 },
                 icon: IconData(
                   FontAwesomeIcons.user.codePoint,

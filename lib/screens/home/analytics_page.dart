@@ -18,30 +18,25 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(FontAwesomeIcons.chartLine, size: 64, color: kAccentColor),
-            SizedBox(height: 12),
-            Text(
-              'Analytics',
-              style: TextStyle(color: kLightAccentColor, fontSize: 18),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
-              },
-              child: Text("Logout"),
-            ),
-          ],
-        ),
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FaIcon(FontAwesomeIcons.chartLine, size: 64, color: kAccentColor),
+          SizedBox(height: 12),
+          Text(
+            'Analytics',
+            style: TextStyle(color: kLightAccentColor, fontSize: 18),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _auth.signOut();
+            },
+            child: Text("Logout"),
+          ),
+        ],
       ),
-      bottomNavigationBar: BottomNavbar(),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gympulse_app/screens/home/account_page.dart';
+import 'package:gympulse_app/screens/home/analytics_page.dart';
 import 'package:gympulse_app/screens/home/bottom_navbar.dart';
 import 'home_content.dart';
 
@@ -20,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   User? loggedInUser;
   String? email;
   int _selectedIndex = 0;
+
+  final List<Widget> _pages = [HomeContent(), AnalyticsPage(), AccountPage()];
 
   @override
   void initState() {
@@ -45,12 +49,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // Pages for each tab — keep simple placeholders so navigation is visible
 
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
 
-      body: Center(child: Column(children: [HomeContent()])),
+        body: _pages[_selectedIndex],
 
-      bottomNavigationBar: BottomNavbar(),
+        bottomNavigationBar: BottomNavbar(
+          updateIndex: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+        ),
+      ),
     );
   }
 }

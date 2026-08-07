@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 setState(() {
                                   showSpinner = false;
                                 });
-                                
+                                Navigator.pop(context);
                               }
                             } on FirebaseAuthException catch (e) {
                               setState(() {

@@ -5,7 +5,7 @@ import 'package:gympulse_app/screens/registration_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
-  static String id = 'HomeScreen';
+  static String id = 'LandingScreen';
 
   @override
   Widget build(BuildContext context) {
