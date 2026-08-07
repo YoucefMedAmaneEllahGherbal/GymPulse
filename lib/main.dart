@@ -6,6 +6,7 @@ import 'package:gympulse_app/screens/landing_screen.dart';
 import 'package:gympulse_app/screens/login_screen.dart';
 import 'package:gympulse_app/screens/registration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,7 +23,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: LandingScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HomeScreen();
+          } else {
+            return LandingScreen();
+          }
+        },
+      ),
 
       routes: {
         LandingScreen.id: (context) => LandingScreen(),
