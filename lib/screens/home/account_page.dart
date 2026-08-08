@@ -39,66 +39,150 @@ class _AccountPageState extends State<AccountPage> {
     });
   }
 
+  void updateData() {}
   // final phoneNbr = FirebaseFirestore.instance
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: kBackgroundColor,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FaIcon(FontAwesomeIcons.userCircle, size: 64, color: kAccentColor),
-          SizedBox(height: 12),
-          Text(
-            'Welcome $userName',
-            style: TextStyle(color: kLightAccentColor, fontSize: 18),
-          ),
-          SizedBox(height: 18),
-          Text(
-            'Your Email : $email',
-            style: TextStyle(color: kLightAccentColor, fontSize: 18),
-          ),
-          SizedBox(height: 18),
-          Text(
-            'Phone Number : $phoneNumber',
-            style: TextStyle(color: kLightAccentColor, fontSize: 18),
-          ),
-          SizedBox(height: 18),
-          TextFieldWidget('New Username', TextInputType.text, false, (value) {
-            newUserName = value;
-          }, usernameController),
-          ElevatedButton(
-            onPressed: () async {
-              final useruid = FirebaseAuth.instance.currentUser!.uid;
+    return SafeArea(
+      child: Container(
+        color: kBackgroundColor,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  FontAwesomeIcons.userCircle,
+                  size: 32,
+                  color: kAccentColor,
+                ),
+                SizedBox(height: 12),
+                Text(
+                  'Account',
+                  style: TextStyle(color: kLightAccentColor, fontSize: 18),
+                ),
+              ],
+            ),
+            SizedBox(height: 18),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              alignment: Alignment.topLeft,
+              decoration: BoxDecoration(
+                color: kSecondaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.userCircle,
+                        size: 25,
+                        color: kAccentColor,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        "Account :",
+                        style: TextStyle(
+                          color: kAccentColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                          email == null ? "you find here your email " : email!,
+                          TextInputType.emailAddress,
+                          false,
+                          (value) {},
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.edit_rounded),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                          userName == null
+                              ? "you find here your username here "
+                              : userName!,
+                          TextInputType.text,
+                          false,
+                          (value) {},
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.edit_rounded),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                          phoneNumber == null
+                              ? "you find here your phone number here "
+                              : phoneNumber!,
+                          TextInputType.text,
+                          false,
+                          (value) {},
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.edit_rounded),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 18),
+            TextFieldWidget('New Username', TextInputType.text, false, (value) {
+              newUserName = value;
+            }, usernameController),
+            ElevatedButton(
+              onPressed: () async {
+                final useruid = FirebaseAuth.instance.currentUser!.uid;
 
-              final userdoc = FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(useruid);
-              await userdoc.update({'username': newUserName});
-              setState(() {
-                userName = newUserName;
-              });
-              usernameController.clear();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: kAccentColor,
-              foregroundColor: kBackgroundColor,
+                final userdoc = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(useruid);
+                await userdoc.update({'username': newUserName});
+                setState(() {
+                  userName = newUserName;
+                });
+                usernameController.clear();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kAccentColor,
+                foregroundColor: kBackgroundColor,
+              ),
+              child: Text('Update Username'),
             ),
-            child: Text('Update Username'),
-          ),
-          SizedBox(height: 18),
-          ElevatedButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: kAccentColor,
-              foregroundColor: kBackgroundColor,
+            SizedBox(height: 18),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kAccentColor,
+                foregroundColor: kBackgroundColor,
+              ),
+              child: Text('Sign out'),
             ),
-            child: Text('Sign out'),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

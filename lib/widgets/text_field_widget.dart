@@ -7,7 +7,7 @@ class TextFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.obscTxt,
     this.changeValue,
-    this.controller,
+    [this.controller,]
   );
   final String hintText;
   final ValueChanged<String> changeValue;
