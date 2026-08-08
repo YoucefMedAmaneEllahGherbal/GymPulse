@@ -146,6 +146,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   email: email!,
                                   password: password!,
                                 );
+                            Navigator.pop(context);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Password doesnt match")),
