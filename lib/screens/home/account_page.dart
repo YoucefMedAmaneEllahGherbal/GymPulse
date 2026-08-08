@@ -141,10 +141,21 @@ class _AccountPageState extends State<AccountPage> {
                           TextInputType.text,
                           false,
                           (value) {},
+                          null,
+                          userNameFocusNode,
+                          (value) async {
+                            await updateData('username', value);
+                            setState(() {
+                              userName = value;
+                            });
+                            userNameFocusNode.unfocus();
+                          },
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          userNameFocusNode.requestFocus();
+                        },
                         icon: Icon(Icons.edit_rounded),
                       ),
                     ],
