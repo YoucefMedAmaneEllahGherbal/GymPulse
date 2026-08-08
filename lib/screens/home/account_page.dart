@@ -170,6 +170,15 @@ class _AccountPageState extends State<AccountPage> {
                           TextInputType.text,
                           false,
                           (value) {},
+                          null,
+                          phoneNumberFocusNode,
+                          (value) async {
+                            await updateData("phonenumber", value);
+                            setState(() {
+                              phoneNumber = value;
+                            });
+                            phoneNumberFocusNode.unfocus();
+                          },
                         ),
                       ),
                       IconButton(
