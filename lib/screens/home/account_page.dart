@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/widgets/text_field_widget.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +22,8 @@ class _AccountPageState extends State<AccountPage> {
   String? email = '';
   String? userName = '';
   String? phoneNumber = '';
+  String? newUserName;
+
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
@@ -57,6 +61,21 @@ class _AccountPageState extends State<AccountPage> {
           Text(
             'Phone Number : $phoneNumber',
             style: TextStyle(color: kLightAccentColor, fontSize: 18),
+          ),
+          SizedBox(height: 18),
+          TextFieldWidget('New Username', TextInputType.text, true, (value) {
+            newUserName = value;
+          }),
+          ElevatedButton(
+            onPressed: () async {
+              final useruid = FirebaseAuth.instance.currentUser!.uid;
+
+              final userdoc = FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(useruid);
+              await userdoc.update({'username': newUserName});
+            },
+            child: Text('Update Username'),
           ),
           SizedBox(height: 18),
           ElevatedButton(
