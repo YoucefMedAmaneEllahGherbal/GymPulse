@@ -14,7 +14,7 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   String? userName;
 
-  Future getUserNAme() async {
+  Future getUserName() async {
     final useruid = FirebaseAuth.instance.currentUser!.uid;
     final userdoc = FirebaseFirestore.instance.collection('users').doc(useruid);
 
@@ -27,7 +27,7 @@ class _HomeContentState extends State<HomeContent> {
   @override
   void initState() {
     super.initState();
-    getUserNAme();
+    getUserName();
   }
 
   @override
