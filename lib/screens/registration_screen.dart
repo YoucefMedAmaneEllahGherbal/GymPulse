@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../widgets/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -146,6 +147,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   email: email!,
                                   password: password!,
                                 );
+                            print("This is the uid");
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(newUser.user!.uid)
+                                .set({
+                                  'email': email,
+                                  'phoneNumber': phoneNumber,
+                                  'username': userName,
+                                });
+                            setState(() {
+                              showSpinner = false;
+                            });
                             Navigator.pop(context);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
