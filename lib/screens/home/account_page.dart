@@ -182,7 +182,9 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          phoneNumberFocusNode.requestFocus();
+                        },
                         icon: Icon(Icons.edit_rounded),
                       ),
                     ],
