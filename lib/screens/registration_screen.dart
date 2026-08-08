@@ -90,6 +90,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         (value) {
                           email = value;
                         },
+                        null,
                       ),
                       TextFieldWidget(
                         "Enter Your Username",
@@ -98,6 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         (value) {
                           userName = value;
                         },
+                        null,
                       ),
                       TextFieldWidget(
                         "Enter Your Phone Number",
@@ -106,6 +108,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         (value) {
                           phoneNumber = value;
                         },
+                        null,
                       ),
                       TextFieldWidget(
                         "Enter Your Password",
@@ -114,6 +117,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         (value) {
                           password = value;
                         },
+                        null,
                       ),
                       TextFieldWidget(
                         "Enter Your Password",
@@ -122,6 +126,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         (value) {
                           confirmationPassword = value;
                         },
+                        null,
                       ),
                     ],
                   ),

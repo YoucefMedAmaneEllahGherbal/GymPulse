@@ -24,6 +24,8 @@ class _AccountPageState extends State<AccountPage> {
   String? phoneNumber = '';
   String? newUserName;
 
+  final TextEditingController usernameController = TextEditingController();
+
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
@@ -63,9 +65,9 @@ class _AccountPageState extends State<AccountPage> {
             style: TextStyle(color: kLightAccentColor, fontSize: 18),
           ),
           SizedBox(height: 18),
-          TextFieldWidget('New Username', TextInputType.text, true, (value) {
+          TextFieldWidget('New Username', TextInputType.text, false, (value) {
             newUserName = value;
-          }),
+          }, usernameController),
           ElevatedButton(
             onPressed: () async {
               final useruid = FirebaseAuth.instance.currentUser!.uid;
@@ -74,7 +76,15 @@ class _AccountPageState extends State<AccountPage> {
                   .collection('users')
                   .doc(useruid);
               await userdoc.update({'username': newUserName});
+              setState(() {
+                userName = newUserName;
+              });
+              usernameController.clear();
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kAccentColor,
+              foregroundColor: kBackgroundColor,
+            ),
             child: Text('Update Username'),
           ),
           SizedBox(height: 18),

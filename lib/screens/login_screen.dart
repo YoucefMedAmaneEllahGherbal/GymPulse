@@ -92,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       (value) {
                         email = value;
                       },
+                      null,
                     ),
                     TextFieldWidget(
                       "Enter Your Password",
@@ -100,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       (value) {
                         password = value;
                       },
+                      null,
                     ),
                     SizedBox(height: 15),
                     Padding(

@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget(this.hintText ,this.keyboardType,this.obscTxt,this.changeValue);
+  const TextFieldWidget(
+    this.hintText,
+    this.keyboardType,
+    this.obscTxt,
+    this.changeValue,
+    this.controller,
+  );
   final String hintText;
   final ValueChanged<String> changeValue;
   final TextInputType keyboardType;
   final bool obscTxt;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,9 +23,8 @@ class TextFieldWidget extends StatelessWidget {
         onChanged: changeValue,
         keyboardType: keyboardType,
         textAlign: TextAlign.center,
-        decoration: kTextFieldDecoration.copyWith(
-          hintText: hintText,
-        ),
+        decoration: kTextFieldDecoration.copyWith(hintText: hintText),
+        controller: controller,
       ),
     );
   }
