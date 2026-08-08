@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/widgets/day_container.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,6 +14,13 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   String? userName;
+  DateTime today = DateTime.now();
+
+  List<DateTime> getCurrentWeek() {
+    DateTime saturday = today.subtract(Duration(days: (today.weekday + 1) % 7));
+
+    return List.generate(7, (index) => saturday.add(Duration(days: index)));
+  }
 
   Future getUserName() async {
     final useruid = FirebaseAuth.instance.currentUser!.uid;
@@ -28,6 +36,27 @@ class _HomeContentState extends State<HomeContent> {
   void initState() {
     super.initState();
     getUserName();
+  }
+
+  String getDayName(int weekday) {
+    switch (weekday) {
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+      case 7:
+        return 'Sun';
+      default:
+        return '';
+    }
   }
 
   @override
@@ -56,12 +85,37 @@ class _HomeContentState extends State<HomeContent> {
           child: Container(color: kAccentColor, height: 1),
         ),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [SizedBox(height: 18)],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: kSecondaryColor,
+              border: Border.all(color: kAccentColor, width: 2),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+              children: getCurrentWeek().map((date) {
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    child: DayContainer(
+                      getDayName(date.weekday),
+                      date.day.toString(),
+                      date.day == today.day &&
+                          date.month == today.month &&
+                          date.year == today.year,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
