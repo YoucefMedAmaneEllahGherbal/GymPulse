@@ -52,6 +52,19 @@ class _AccountPageState extends State<AccountPage> {
     });
   }
 
+  Future updateEmail(String newEmail) async {
+    final user = FirebaseAuth.instance.currentUser!;
+    await user.verifyBeforeUpdateEmail(newEmail);
+  }
+
+  void checkEmail() async {
+    final user = FirebaseAuth.instance.currentUser!;
+
+    await user.reload();
+
+    print(user.email);
+  }
+
   // final phoneNbr = FirebaseFirestore.instance
   @override
   Widget build(BuildContext context) {
@@ -115,7 +128,7 @@ class _AccountPageState extends State<AccountPage> {
                           null,
                           emailFocusNode,
                           (value) async {
-                            await updateData('email', value);
+                            await updateEmail(value);
                             setState(() {
                               email = value;
                             });
@@ -126,6 +139,7 @@ class _AccountPageState extends State<AccountPage> {
                       IconButton(
                         onPressed: () {
                           emailFocusNode.requestFocus();
+                          checkEmail();
                         },
                         icon: Icon(Icons.edit_rounded),
                       ),
@@ -167,13 +181,13 @@ class _AccountPageState extends State<AccountPage> {
                           phoneNumber == null
                               ? "you find here your phone number here "
                               : phoneNumber!,
-                          TextInputType.text,
+                          TextInputType.phone,
                           false,
                           (value) {},
                           null,
                           phoneNumberFocusNode,
                           (value) async {
-                            await updateData("phonenumber", value);
+                            await updateData("phoneNumber", value);
                             setState(() {
                               phoneNumber = value;
                             });
