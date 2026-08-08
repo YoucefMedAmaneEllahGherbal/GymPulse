@@ -26,6 +26,8 @@ class _AccountPageState extends State<AccountPage> {
 
   final TextEditingController usernameController = TextEditingController();
   final FocusNode emailFocusNode = FocusNode();
+  final FocusNode userNameFocusNode = FocusNode();
+  final FocusNode phoneNumberFocusNode = FocusNode();
 
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
