@@ -25,6 +25,7 @@ class _AccountPageState extends State<AccountPage> {
   String? newUserName;
 
   final TextEditingController usernameController = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
 
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -39,7 +40,16 @@ class _AccountPageState extends State<AccountPage> {
     });
   }
 
-  void updateData() {}
+  Future updateData(String dataToChange, String newData) async {
+    final useruid = FirebaseAuth.instance.currentUser!.uid;
+
+    final userdoc = FirebaseFirestore.instance.collection('users').doc(useruid);
+    await userdoc.update({dataToChange: newData});
+    setState(() {
+      dataToChange = newData;
+    });
+  }
+
   // final phoneNbr = FirebaseFirestore.instance
   @override
   Widget build(BuildContext context) {
@@ -100,10 +110,21 @@ class _AccountPageState extends State<AccountPage> {
                           TextInputType.emailAddress,
                           false,
                           (value) {},
+                          null,
+                          emailFocusNode,
+                          (value) async {
+                            await updateData('email', value);
+                            setState(() {
+                              email = value;
+                            });
+                            emailFocusNode.unfocus();
+                          },
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          emailFocusNode.requestFocus();
+                        },
                         icon: Icon(Icons.edit_rounded),
                       ),
                     ],
@@ -153,15 +174,6 @@ class _AccountPageState extends State<AccountPage> {
             }, usernameController),
             ElevatedButton(
               onPressed: () async {
-                final useruid = FirebaseAuth.instance.currentUser!.uid;
-
-                final userdoc = FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(useruid);
-                await userdoc.update({'username': newUserName});
-                setState(() {
-                  userName = newUserName;
-                });
                 usernameController.clear();
               },
               style: ElevatedButton.styleFrom(

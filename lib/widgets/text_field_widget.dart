@@ -7,13 +7,15 @@ class TextFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.obscTxt,
     this.changeValue,
-    [this.controller,]
+    [this.controller, this.focusNode , this.submitValue]
   );
   final String hintText;
   final ValueChanged<String> changeValue;
   final TextInputType keyboardType;
   final bool obscTxt;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final ValueChanged<String>? submitValue;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,6 +27,8 @@ class TextFieldWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         decoration: kTextFieldDecoration.copyWith(hintText: hintText),
         controller: controller,
+        focusNode: focusNode,
+        onSubmitted: submitValue,
       ),
     );
   }
