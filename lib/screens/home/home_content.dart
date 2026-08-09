@@ -15,6 +15,7 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   String? userName;
   DateTime today = DateTime.now();
+  bool isTodayAttended = false;
 
   List<DateTime> getCurrentWeek() {
     DateTime saturday = today.subtract(Duration(days: (today.weekday + 1) % 7));
@@ -86,8 +87,9 @@ class _HomeContentState extends State<HomeContent> {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 20),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             padding: EdgeInsets.all(12),
@@ -109,11 +111,23 @@ class _HomeContentState extends State<HomeContent> {
                       date.day == today.day &&
                           date.month == today.month &&
                           date.year == today.year,
+                      isTodayAttended,
                     ),
                   ),
                 );
               }).toList(),
             ),
+          ),
+          SizedBox(height: 20),
+
+          ElevatedButton.icon(
+            onPressed: () {
+              setState(() {
+                isTodayAttended = true;
+              });
+            },
+            icon: Icon(Icons.check),
+            label: Text('Check in today'),
           ),
         ],
       ),

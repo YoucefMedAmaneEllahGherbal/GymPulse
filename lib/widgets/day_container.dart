@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 
 class DayContainer extends StatelessWidget {
-  const DayContainer(this.day, this.date, this.isToday);
+  const DayContainer(this.day, this.date, this.isToday, this.isAttended);
   final String day;
   final String date;
   final bool isToday;
+  final bool isAttended;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,6 +36,9 @@ class DayContainer extends StatelessWidget {
               fontSize: 12,
             ),
           ),
+          if (isAttended) Icon(Icons.check, color: Colors.green, size: 16),
+
+          
         ],
       ),
     );
