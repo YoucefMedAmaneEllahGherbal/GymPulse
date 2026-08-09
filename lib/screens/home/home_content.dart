@@ -111,7 +111,10 @@ class _HomeContentState extends State<HomeContent> {
                       date.day == today.day &&
                           date.month == today.month &&
                           date.year == today.year,
-                      isTodayAttended,
+                      isTodayAttended &&
+                          date.day == today.day &&
+                          date.month == today.month &&
+                          date.year == today.year,
                     ),
                   ),
                 );
