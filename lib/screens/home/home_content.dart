@@ -5,6 +5,8 @@ import 'package:gympulse_app/widgets/day_container.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class HomeContent extends StatefulWidget {
   static String id = 'HomeContent';
 
@@ -124,7 +126,11 @@ class _HomeContentState extends State<HomeContent> {
           SizedBox(height: 20),
 
           ElevatedButton.icon(
-            onPressed: () {
+            onPressed: () async{
+               final useruid = FirebaseAuth.instance.currentUser!.uid;
+               final attendanceDoc = FirebaseFirestore.instance.collection('users').doc(useruid).collection('attendance').doc( '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}');
+
+              await attendanceDoc.set({'attended' : true});
               setState(() {
                 isTodayAttended = true;
               });
