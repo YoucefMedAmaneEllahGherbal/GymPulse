@@ -17,13 +17,7 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   String? userName;
   DateTime today = DateTime.now();
-  bool isTodayAttended = false;
-
-  List<DateTime> getCurrentWeek() {
-    DateTime saturday = today.subtract(Duration(days: (today.weekday + 1) % 7));
-
-    return List.generate(7, (index) => saturday.add(Duration(days: index)));
-  }
+  List<bool> weekAttendance = List.filled(7, false);
 
   Future getUserName() async {
     final useruid = FirebaseAuth.instance.currentUser!.uid;
@@ -33,32 +27,6 @@ class _HomeContentState extends State<HomeContent> {
     setState(() {
       userName = userData['username'];
     });
-  }
-
-  Future getTodayAttendance() async {
-    final useruid = FirebaseAuth.instance.currentUser!.uid;
-    final attendanceDoc = FirebaseFirestore.instance
-        .collection('users')
-        .doc(useruid)
-        .collection('attendance')
-        .doc(
-          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}',
-        );
-
-    final attendanceData = await attendanceDoc.get();
-
-    if (attendanceData.exists) {
-      setState(() {
-        isTodayAttended = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUserName();
-    getTodayAttendance();
   }
 
   String getDayName(int weekday) {
@@ -80,6 +48,47 @@ class _HomeContentState extends State<HomeContent> {
       default:
         return '';
     }
+  }
+
+  List<DateTime> getCurrentWeek() {
+    DateTime saturday = today.subtract(Duration(days: (today.weekday + 1) % 7));
+
+    return List.generate(7, (index) => saturday.add(Duration(days: index)));
+  }
+
+  Future getWeekAttendance() async {
+    final useruid = FirebaseAuth.instance.currentUser!.uid;
+
+    final attendanceCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(useruid)
+        .collection('attendance');
+
+    final week = getCurrentWeek();
+    for (int i = 0; i < week.length; i++) {
+      final date = week[i];
+
+      final dateId =
+          '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+
+      final attendanceDoc = await attendanceCollection.doc(dateId).get();
+
+      if (attendanceDoc.exists) {
+        weekAttendance[i] = attendanceDoc['attended'];
+      }
+    }
+    setState(() {});
+  }
+
+  int getTodayIndex() {
+    return (today.weekday + 1) % 7;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserName();
+    getWeekAttendance();
   }
 
   @override
@@ -123,7 +132,9 @@ class _HomeContentState extends State<HomeContent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-              children: getCurrentWeek().map((date) {
+              children: getCurrentWeek().asMap().entries.map((entry) {
+                final index = entry.key;
+                final date = entry.value;
                 return Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -133,10 +144,7 @@ class _HomeContentState extends State<HomeContent> {
                       date.day == today.day &&
                           date.month == today.month &&
                           date.year == today.year,
-                      isTodayAttended &&
-                          date.day == today.day &&
-                          date.month == today.month &&
-                          date.year == today.year,
+                      weekAttendance[index],
                     ),
                   ),
                 );
@@ -158,11 +166,15 @@ class _HomeContentState extends State<HomeContent> {
 
               await attendanceDoc.set({'attended': true});
               setState(() {
-                isTodayAttended = true;
+                weekAttendance[getTodayIndex()] = true;
               });
             },
             icon: Icon(Icons.check),
-            label: Text('Check in today'),
+            label: Text(
+              weekAttendance[getTodayIndex()]
+                  ? 'Checked in '
+                  : 'Check in Today',
+            ),
           ),
         ],
       ),
