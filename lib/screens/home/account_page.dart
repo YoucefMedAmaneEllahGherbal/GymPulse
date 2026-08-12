@@ -12,18 +12,32 @@ class AccountPage extends StatefulWidget {
   State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     getUserData();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      checkEmail();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   String? email = '';
   String? userName = '';
   String? phoneNumber = '';
 
-  bool? isEmailVerified;
+  bool isEmailVerified = false;
 
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode userNameFocusNode = FocusNode();

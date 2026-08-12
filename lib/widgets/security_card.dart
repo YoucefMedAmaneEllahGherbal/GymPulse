@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/screens/change_password_screen.dart';
 import '../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -45,7 +46,9 @@ class SecurityCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ChangePasswordScreen.id);
+                },
                 icon: Icon(Icons.arrow_right_alt_outlined, size: 32),
               ),
             ],
