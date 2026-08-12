@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gympulse_app/widgets/security_card.dart';
 
 import '../../constants.dart';
 import '../../widgets/account_info_card.dart';
@@ -22,14 +23,17 @@ class _AccountPageState extends State<AccountPage> {
   String? userName = '';
   String? phoneNumber = '';
 
+  bool? isEmailVerified;
+
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode userNameFocusNode = FocusNode();
   final FocusNode phoneNumberFocusNode = FocusNode();
 
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    final userDoc =
-        FirebaseFirestore.instance.collection('users').doc(userId);
+    final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
+
+    final emailStatus = FirebaseAuth.instance.currentUser!.emailVerified;
 
     final userData = await userDoc.get();
 
@@ -37,18 +41,16 @@ class _AccountPageState extends State<AccountPage> {
       email = userData['email'];
       userName = userData['username'];
       phoneNumber = userData['phoneNumber'];
+      isEmailVerified = emailStatus;
     });
   }
 
   Future updateData(String dataToChange, String newData) async {
     final useruid = FirebaseAuth.instance.currentUser!.uid;
 
-    final userdoc =
-        FirebaseFirestore.instance.collection('users').doc(useruid);
+    final userdoc = FirebaseFirestore.instance.collection('users').doc(useruid);
 
-    await userdoc.update({
-      dataToChange: newData,
-    });
+    await userdoc.update({dataToChange: newData});
   }
 
   Future updateEmail(String newEmail) async {
@@ -56,12 +58,17 @@ class _AccountPageState extends State<AccountPage> {
     await user.verifyBeforeUpdateEmail(newEmail);
   }
 
-  void checkEmail() async {
+  Future<void> checkEmail() async {
     final user = FirebaseAuth.instance.currentUser!;
 
     await user.reload();
 
-    print(user.email);
+    final updatedUser = FirebaseAuth.instance.currentUser!;
+    setState(() {
+      isEmailVerified = updatedUser.emailVerified;
+    });
+
+    print("checking the is verified variable : $isEmailVerified");
   }
 
   @override
@@ -75,11 +82,7 @@ class _AccountPageState extends State<AccountPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(
-              FontAwesomeIcons.userCircle,
-              size: 32,
-              color: kAccentColor,
-            ),
+            FaIcon(FontAwesomeIcons.userCircle, size: 32, color: kAccentColor),
             SizedBox(width: 6),
             Text(
               'Account',
@@ -93,10 +96,7 @@ class _AccountPageState extends State<AccountPage> {
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1),
-          child: Container(
-            color: kAccentColor,
-            height: 1,
-          ),
+          child: Container(color: kAccentColor, height: 1),
         ),
       ),
 
@@ -160,6 +160,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
 
           SizedBox(height: 18),
+          SecurityCard(isEmailVerified!),
 
           ElevatedButton(
             onPressed: () {
