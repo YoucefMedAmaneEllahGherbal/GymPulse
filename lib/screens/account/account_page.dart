@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gympulse_app/widgets/security_card.dart';
+import 'package:gympulse_app/widgets/subscription_card.dart';
 
 import '../../constants.dart';
 import '../../widgets/account_info_card.dart';
@@ -114,83 +115,87 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
         ),
       ),
 
-      body: Column(
-        children: [
-          SizedBox(height: 18),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 18),
 
-          AccountInfoCard(
-            email: email,
-            userName: userName,
-            phoneNumber: phoneNumber,
+            AccountInfoCard(
+              email: email,
+              userName: userName,
+              phoneNumber: phoneNumber,
 
-            emailFocusNode: emailFocusNode,
+              emailFocusNode: emailFocusNode,
 
-            onEmailChanged: (value) async {
-              await updateEmail(value);
+              onEmailChanged: (value) async {
+                await updateEmail(value);
 
-              setState(() {
-                email = value;
-              });
+                setState(() {
+                  email = value;
+                });
 
-              emailFocusNode.unfocus();
-            },
+                emailFocusNode.unfocus();
+              },
 
-            onEmailEdit: () {
-              emailFocusNode.requestFocus();
-              checkEmail();
-            },
+              onEmailEdit: () {
+                emailFocusNode.requestFocus();
+                checkEmail();
+              },
 
-            userNameFocusNode: userNameFocusNode,
+              userNameFocusNode: userNameFocusNode,
 
-            onUserNameChanged: (value) async {
-              await updateData('username', value);
+              onUserNameChanged: (value) async {
+                await updateData('username', value);
 
-              setState(() {
-                userName = value;
-              });
+                setState(() {
+                  userName = value;
+                });
 
-              userNameFocusNode.unfocus();
-            },
+                userNameFocusNode.unfocus();
+              },
 
-            onUserNameEdit: () {
-              userNameFocusNode.requestFocus();
-            },
+              onUserNameEdit: () {
+                userNameFocusNode.requestFocus();
+              },
 
-            phoneNumberFocusNode: phoneNumberFocusNode,
+              phoneNumberFocusNode: phoneNumberFocusNode,
 
-            onPhoneNumberChanged: (value) async {
-              await updateData('phoneNumber', value);
+              onPhoneNumberChanged: (value) async {
+                await updateData('phoneNumber', value);
 
-              setState(() {
-                phoneNumber = value;
-              });
+                setState(() {
+                  phoneNumber = value;
+                });
 
-              phoneNumberFocusNode.unfocus();
-            },
+                phoneNumberFocusNode.unfocus();
+              },
 
-            onPhoneNumberEdit: () {
-              phoneNumberFocusNode.requestFocus();
-            },
-          ),
-
-          SizedBox(height: 18),
-          SecurityCard(isEmailVerified!, () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Password changed succesfully")),
-            );
-          }),
-
-          ElevatedButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: kAccentColor,
-              foregroundColor: kBackgroundColor,
+              onPhoneNumberEdit: () {
+                phoneNumberFocusNode.requestFocus();
+              },
             ),
-            child: Text('Sign out'),
-          ),
-        ],
+
+            SizedBox(height: 18),
+            SubscriptionCard(),
+            SizedBox(height: 18),
+            SecurityCard(isEmailVerified!, () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Password changed succesfully")),
+              );
+            }),
+
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kAccentColor,
+                foregroundColor: kBackgroundColor,
+              ),
+              child: Text('Sign out'),
+            ),
+          ],
+        ),
       ),
     );
   }
