@@ -79,7 +79,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Password Changed Succesfully")),
                     );
-                    Navigator.pop(context , true);
+                   Navigator.pop(context , true);
                   } on FirebaseAuthException catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

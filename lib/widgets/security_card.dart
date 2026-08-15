@@ -5,9 +5,10 @@ import '../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SecurityCard extends StatelessWidget {
-  const SecurityCard(this.isEmailVerified);
+  const SecurityCard(this.isEmailVerified, this.onPasswordChanged);
 
   final bool isEmailVerified;
+  final VoidCallback onPasswordChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +47,14 @@ class SecurityCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, ChangePasswordScreen.id);
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(
+                    context,
+                    ChangePasswordScreen.id,
+                  );
+                  if (result == true) {
+                    onPasswordChanged();
+                  }
                 },
                 icon: Icon(Icons.arrow_right_alt_outlined, size: 32),
               ),

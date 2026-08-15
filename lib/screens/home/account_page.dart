@@ -174,7 +174,11 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
           ),
 
           SizedBox(height: 18),
-          SecurityCard(isEmailVerified!),
+          SecurityCard(isEmailVerified!, () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Password changed succesfully")),
+            );
+          }),
 
           ElevatedButton(
             onPressed: () {
