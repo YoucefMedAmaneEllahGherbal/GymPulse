@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 
 class SubscriptionCard extends StatelessWidget {
-  const SubscriptionCard({super.key});
+  const SubscriptionCard(
+    this.subscriptionActive,
+    this.subscriptionStartDate,
+    this.subscriptionExpiryDate,
+    this.remainingDays,
+  );
+
+  final bool subscriptionActive;
+  final DateTime? subscriptionStartDate;
+  final DateTime? subscriptionExpiryDate;
+  final int? remainingDays;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +36,7 @@ class SubscriptionCard extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Text(
-                "Subscription :",
+                "Subscription : ",
                 style: TextStyle(
                   color: kAccentColor,
                   fontWeight: FontWeight.bold,
@@ -41,46 +51,57 @@ class SubscriptionCard extends StatelessWidget {
               Icon(Icons.switch_account_sharp, color: kLightAccentColor),
               SizedBox(width: 8),
               Text(
-                "Status",
+                "Status : ${subscriptionActive ? "Active " : "Not Active"}",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: kAccentColor, fontSize: 16),
               ),
             ],
           ),
-          Row(
-            children: [
-              SizedBox(width: 12),
-              Icon(Icons.event_available_outlined, color: kLightAccentColor),
-              SizedBox(width: 8),
-              Text(
-                "Started : ",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: kAccentColor, fontSize: 16),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              SizedBox(width: 12),
-              Icon(Icons.event_busy, color: kLightAccentColor),
-              SizedBox(width: 8),
-              Text(
-                "Expires : ",
-                style: TextStyle(color: kAccentColor, fontSize: 16),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              SizedBox(width: 12),
-              Icon(Icons.hourglass_bottom_outlined, color: kLightAccentColor),
-              SizedBox(width: 8),
-              Text(
-                "Remaining : ",
-                style: TextStyle(color: kAccentColor, fontSize: 16),
-              ),
-            ],
-          ),
+          if (subscriptionActive)
+            Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(width: 12),
+                    Icon(
+                      Icons.event_available_outlined,
+                      color: kLightAccentColor,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "Started : $subscriptionStartDate",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: kAccentColor, fontSize: 16),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 12),
+                    Icon(Icons.event_busy, color: kLightAccentColor),
+                    SizedBox(width: 8),
+                    Text(
+                      "Expires : $subscriptionExpiryDate",
+                      style: TextStyle(color: kAccentColor, fontSize: 16),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 12),
+                    Icon(
+                      Icons.hourglass_bottom_outlined,
+                      color: kLightAccentColor,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "Remaining : $remainingDays Days",
+                      style: TextStyle(color: kAccentColor, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ],
+            ),
         ],
       ),
     );

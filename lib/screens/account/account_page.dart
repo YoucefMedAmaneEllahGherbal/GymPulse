@@ -44,9 +44,9 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
   final FocusNode userNameFocusNode = FocusNode();
   final FocusNode phoneNumberFocusNode = FocusNode();
 
-  bool isSubscriptionActive = false;
+  bool subscriptionActive = false;
   DateTime? subscriptionStartDate;
-  DateTime? subscriptionExpDate;
+  DateTime? subscriptionExpiryDate;
   int? remainingDays;
 
   void getUserData() async {
@@ -62,6 +62,10 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
       userName = userData['username'];
       phoneNumber = userData['phoneNumber'];
       isEmailVerified = emailStatus;
+      subscriptionActive = userData['subscriptionActive'];
+      subscriptionStartDate = userData['subscriptionStartDate'].toDate();
+      subscriptionExpiryDate = userData['subscriptionExpiryDate'].toDate();
+      remainingDays = subscriptionExpiryDate!.difference(DateTime.now()).inDays;
     });
   }
 
@@ -181,7 +185,14 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
             ),
 
             SizedBox(height: 18),
-            SubscriptionCard(),
+
+            SubscriptionCard(
+              subscriptionActive,
+              subscriptionStartDate,
+              subscriptionExpiryDate,
+              remainingDays,
+            ),
+
             SizedBox(height: 18),
             SecurityCard(isEmailVerified!, () {
               ScaffoldMessenger.of(context).showSnackBar(
