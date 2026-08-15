@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
-import 'package:gympulse_app/screens/login_screen.dart';
-import 'package:gympulse_app/screens/registration_screen.dart';
+import 'package:gympulse_app/screens/auth/login_screen.dart';
+import 'package:gympulse_app/screens/auth/registration_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});

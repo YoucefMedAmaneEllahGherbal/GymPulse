@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gympulse_app/screens/home/account_page.dart';
+import 'package:gympulse_app/screens/account/account_page.dart';
 import 'package:gympulse_app/screens/home/analytics_page.dart';
 import 'package:gympulse_app/screens/home/bottom_navbar.dart';
 import 'home_content.dart';

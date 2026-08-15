@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gympulse_app/screens/change_password_screen.dart';
+import 'package:gympulse_app/screens/account/change_password_screen.dart';
 import 'package:gympulse_app/screens/home/analytics_page.dart';
 import 'package:gympulse_app/screens/home/home_content.dart';
 import 'package:gympulse_app/screens/home/home_screen.dart';
-import 'package:gympulse_app/screens/landing_screen.dart';
-import 'package:gympulse_app/screens/login_screen.dart';
-import 'package:gympulse_app/screens/registration_screen.dart';
+import 'package:gympulse_app/screens/auth/landing_screen.dart';
+import 'package:gympulse_app/screens/auth/login_screen.dart';
+import 'package:gympulse_app/screens/auth/registration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';

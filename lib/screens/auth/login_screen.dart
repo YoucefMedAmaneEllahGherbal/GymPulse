@@ -4,7 +4,7 @@ import 'package:gympulse_app/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gympulse_app/screens/home/home_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../widgets/text_field_widget.dart';
+import '../../widgets/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 const String id = "LoginScreen";
