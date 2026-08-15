@@ -49,6 +49,8 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
   DateTime? subscriptionExpiryDate;
   int? remainingDays;
 
+  bool isSubscriptionExpired = false;
+
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
@@ -65,6 +67,7 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
       subscriptionActive = userData['subscriptionActive'];
       subscriptionStartDate = userData['subscriptionStartDate'].toDate();
       subscriptionExpiryDate = userData['subscriptionExpiryDate'].toDate();
+      isSubscriptionExpired = subscriptionExpiryDate!.isBefore(DateTime.now());
       remainingDays = subscriptionExpiryDate!.difference(DateTime.now()).inDays;
     });
   }
@@ -191,6 +194,7 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
               subscriptionStartDate,
               subscriptionExpiryDate,
               remainingDays,
+              isSubscriptionExpired,
             ),
 
             SizedBox(height: 18),

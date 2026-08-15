@@ -8,12 +8,14 @@ class SubscriptionCard extends StatelessWidget {
     this.subscriptionStartDate,
     this.subscriptionExpiryDate,
     this.remainingDays,
+    this.isSubscriptionExpired,
   );
 
   final bool subscriptionActive;
   final DateTime? subscriptionStartDate;
   final DateTime? subscriptionExpiryDate;
   final int? remainingDays;
+  final bool isSubscriptionExpired;
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +51,28 @@ class SubscriptionCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: 12),
-              Icon(Icons.switch_account_sharp, color: kLightAccentColor),
+              if (subscriptionActive)
+                if (!isSubscriptionExpired)
+                  Icon(Icons.check_circle_outline, color: kLightAccentColor),
+              if (subscriptionActive)
+                if (isSubscriptionExpired)
+                  Icon(Icons.error_outline, color: kLightAccentColor),
+              if (!subscriptionActive)
+                Icon(Icons.remove_circle_outline, color: kLightAccentColor),
+
               SizedBox(width: 8),
               Text(
-                "Status : ${subscriptionActive ? "Active " : "Not Active"}",
+                "Status : ${subscriptionActive
+                    ? isSubscriptionExpired
+                          ? 'Expired'
+                          : 'Active'
+                    : "Not Active"}",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: kAccentColor, fontSize: 16),
               ),
             ],
           ),
-          if (subscriptionActive)
+          if (subscriptionActive && !isSubscriptionExpired)
             Column(
               children: [
                 Row(
