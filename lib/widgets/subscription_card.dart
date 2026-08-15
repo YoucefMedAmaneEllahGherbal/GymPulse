@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
+import 'package:intl/intl.dart';
 
 class SubscriptionCard extends StatelessWidget {
   const SubscriptionCard(
@@ -69,7 +70,7 @@ class SubscriptionCard extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      "Started : $subscriptionStartDate",
+                      "Started : ${DateFormat.yMMMEd().format(subscriptionStartDate!)}",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: kAccentColor, fontSize: 16),
                     ),
@@ -81,7 +82,7 @@ class SubscriptionCard extends StatelessWidget {
                     Icon(Icons.event_busy, color: kLightAccentColor),
                     SizedBox(width: 8),
                     Text(
-                      "Expires : $subscriptionExpiryDate",
+                      "Expires : ${DateFormat.yMMMEd().format(subscriptionExpiryDate!)}",
                       style: TextStyle(color: kAccentColor, fontSize: 16),
                     ),
                   ],
