@@ -44,6 +44,11 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
   final FocusNode userNameFocusNode = FocusNode();
   final FocusNode phoneNumberFocusNode = FocusNode();
 
+  bool isSubscriptionActive = false;
+  DateTime? subscriptionStartDate;
+  DateTime? subscriptionExpDate;
+  int? remainingDays;
+
   void getUserData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);

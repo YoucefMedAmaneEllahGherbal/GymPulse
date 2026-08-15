@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 
-class SubscriptionCard extends StatefulWidget {
+class SubscriptionCard extends StatelessWidget {
   const SubscriptionCard({super.key});
 
-  @override
-  State<SubscriptionCard> createState() => _SubscriptionCardState();
-}
-
-class _SubscriptionCardState extends State<SubscriptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
