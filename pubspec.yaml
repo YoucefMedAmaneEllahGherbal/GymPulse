@@ -42,6 +42,7 @@ dependencies:
   flutter_progress_hud: ^2.0.2
   modal_progress_hud_nsn: ^0.5.1
   intl: ^0.20.3
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

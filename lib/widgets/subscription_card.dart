@@ -51,12 +51,10 @@ class SubscriptionCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: 12),
-              if (subscriptionActive)
-                if (!isSubscriptionExpired)
-                  Icon(Icons.check_circle_outline, color: kLightAccentColor),
-              if (subscriptionActive)
-                if (isSubscriptionExpired)
-                  Icon(Icons.error_outline, color: kLightAccentColor),
+              if (subscriptionActive && !isSubscriptionExpired)
+                Icon(Icons.check_circle_outline, color: Colors.green),
+              if (subscriptionActive && isSubscriptionExpired)
+                Icon(Icons.error_outline, color: Colors.red),
               if (!subscriptionActive)
                 Icon(Icons.remove_circle_outline, color: kLightAccentColor),
 
@@ -114,6 +112,18 @@ class SubscriptionCard extends StatelessWidget {
                       style: TextStyle(color: kAccentColor, fontSize: 16),
                     ),
                   ],
+                ),
+              ],
+            ),
+          if (subscriptionActive && isSubscriptionExpired)
+            Row(
+              children: [
+                SizedBox(width: 12),
+                Icon(Icons.event_busy, color: kLightAccentColor),
+                SizedBox(width: 8),
+                Text(
+                  "Expiry Date : ${DateFormat.yMMMEd().format(subscriptionExpiryDate!)}",
+                  style: TextStyle(color: kAccentColor, fontSize: 16),
                 ),
               ],
             ),

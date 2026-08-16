@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/screens/account/change_password_screen.dart';
+import 'package:gympulse_app/screens/account/my_qr_screen.dart';
 import 'package:gympulse_app/screens/home/analytics_page.dart';
 import 'package:gympulse_app/screens/home/home_content.dart';
 import 'package:gympulse_app/screens/home/home_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         HomeContent.id: (context) => HomeContent(),
         AnalyticsPage.id: (context) => AnalyticsPage(),
         ChangePasswordScreen.id :(context) => ChangePasswordScreen(),
+        MyQrScreen.id :(context) => MyQrScreen(),
       },
     );
   }
