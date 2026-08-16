@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gympulse_app/screens/account/my_qr_screen.dart';
 import 'package:gympulse_app/widgets/day_container.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -98,6 +99,7 @@ class _HomeContentState extends State<HomeContent> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: kBackgroundColor,
+
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -112,6 +114,16 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ],
         ),
+
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, MyQrScreen.id);
+            },
+            icon: Icon(Icons.qr_code_2_outlined, color: Colors.white, size: 32),
+          ),
+        ],
+
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1),
           child: Container(color: kAccentColor, height: 1),
