@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'admin_members_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});

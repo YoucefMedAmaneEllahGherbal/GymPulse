@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'admin_member_details_screen.dart';
 
 class AdminMembersScreen extends StatelessWidget {
   const AdminMembersScreen({super.key});
@@ -36,7 +37,10 @@ class AdminMembersScreen extends StatelessWidget {
         ),
       ),
       body: FutureBuilder(
-        future: FirebaseFirestore.instance.collection('users').get(),
+        future: FirebaseFirestore.instance
+            .collection('users')
+            .where('role', isEqualTo: "user")
+            .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -57,6 +61,14 @@ class AdminMembersScreen extends StatelessWidget {
                   user['email'],
                   style: TextStyle(color: kAccentColor, fontSize: 15),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AdminMemberDetailsScreen(user: user,),
+                    ),
+                  );
+                },
               );
             },
           );
