@@ -152,8 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   email: email!,
                                   password: password!,
                                 );
-                            print("This is the uid");
-
+                            
                             await FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(newUser.user!.uid)

@@ -9,7 +9,9 @@ import 'package:gympulse_app/screens/auth/login_screen.dart';
 import 'package:gympulse_app/screens/auth/registration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
+import './screens/admin/admin_dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,26 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           print(snapshot.data);
           if (snapshot.hasData) {
-            return HomeScreen();
+            final user = snapshot.data!;
+            return FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(user.uid)
+                  .get(),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final userData = userSnapshot.data!.data();
+                if (userData!['role'] == "admin") {
+                  return AdminDashboard();
+                } else {
+                  return HomeScreen();
+                }
+              },
+            );
           } else {
             return LandingScreen();
           }
@@ -44,8 +65,8 @@ class MyApp extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(),
         HomeContent.id: (context) => HomeContent(),
         AnalyticsPage.id: (context) => AnalyticsPage(),
-        ChangePasswordScreen.id :(context) => ChangePasswordScreen(),
-        MyQrScreen.id :(context) => MyQrScreen(),
+        ChangePasswordScreen.id: (context) => ChangePasswordScreen(),
+        MyQrScreen.id: (context) => MyQrScreen(),
       },
     );
   }
