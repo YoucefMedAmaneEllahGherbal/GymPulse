@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../constants.dart';
@@ -15,6 +16,12 @@ class AdminMemberDetailsScreen extends StatefulWidget {
 
 class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
   int selectedDuration = 30;
+  Future<void> updateExpiredSubscription() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.user.id)
+        .update({"subscriptionActive": false});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +65,12 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
 
           final user = snapshot.data!;
           final subscriptionActive = user['subscriptionActive'] ?? false;
+          final expiryDate = user['subscriptionExpiryDate']?.toDate();
+          if (subscriptionActive == true &&
+              expiryDate != null &&
+              expiryDate.isBefore(DateTime.now())) {
+            updateExpiredSubscription();
+          }
 
           return Padding(
             padding: const EdgeInsets.all(20),
@@ -83,6 +96,56 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                   ),
                   Text(
                     'Expiry: ${DateFormat.MMMEd().format(user['subscriptionExpiryDate'].toDate()).toString()}',
+                  ),
+                  SizedBox(height: 8),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Confirm Deactivation"),
+                              content: Text(
+                                "Are you sure You want to Deactivate ${user["username"]} subscription ?",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Cancel"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(widget.user.id)
+                                        .update({"subscriptionActive": false});
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Deactivate",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Text(
+                        "deactivate Subscription",
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
+                    ),
                   ),
                 ] else ...[
                   const Text('Status: No active subscription'),
