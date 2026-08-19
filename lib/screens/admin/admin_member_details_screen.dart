@@ -97,10 +97,10 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                 if (subscriptionActive == true) ...[
                   Text('Status: Active'),
                   Text(
-                    'Start: ${DateFormat.MMMEd().format(user['subscriptionStartDate'].toDate()).toString()}',
+                    'Start: ${DateFormat.MMMEd().format(user['subscriptionStartDate']?.toDate()).toString()}',
                   ),
                   Text(
-                    'Expiry: ${DateFormat.MMMEd().format(user['subscriptionExpiryDate'].toDate()).toString()}',
+                    'Expiry: ${DateFormat.MMMEd().format(user['subscriptionExpiryDate']?.toDate()).toString()}',
                   ),
                   SizedBox(height: 8),
                   Center(
@@ -269,23 +269,60 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                     "Attendance",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
+
                   StreamBuilder(
                     stream: attendanceStream,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       }
+                      if (snapshot.hasError) {
+                        return const Text("Somthing went wrong");
+                      }
 
                       final attendanceRecords = snapshot.data!.docs;
 
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: attendanceRecords.length,
+                      if (attendanceRecords.isEmpty) {
+                        return const Column(
+                          children: [
+                            Text("Total visits : 0"),
+                            SizedBox(height: 10),
+                            Text("No attendance record yet"),
+                          ],
+                        );
+                      }
 
-                        itemBuilder: (context, index) {
-                          final record = attendanceRecords[index];
-                          return ListTile(title: Text(record.id));
-                        },
+                      return Column(
+                        children: [
+                          Text(
+                            "Total visits ${attendanceRecords.length}",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: attendanceRecords.length,
+
+                            itemBuilder: (context, index) {
+                              final record = attendanceRecords[index];
+
+                              final checkInTime = record['checkInTime']
+                                  .toDate();
+
+                              final attendanceDate = DateFormat(
+                                'yyyy-MM-dd',
+                              ).parse(record.id);
+
+                              return ListTile(
+                                title: Text(
+                                  DateFormat.yMMMd().format(attendanceDate),
+                                ),
+                                subtitle: Text(
+                                  DateFormat('hh:mm a').format(checkInTime),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       );
                     },
                   ),
