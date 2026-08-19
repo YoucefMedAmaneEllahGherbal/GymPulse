@@ -152,7 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   email: email!,
                                   password: password!,
                                 );
-                            
+
                             await FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(newUser.user!.uid)
@@ -160,6 +160,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   'email': email,
                                   'phoneNumber': phoneNumber,
                                   'username': userName,
+                                  'role': "user",
+                                  'subscriptionActive': false,
+                                  'subscriptionStartDate': null,
+                                  'subscriptionExpiryDate': null,
                                 });
                             setState(() {
                               showSpinner = false;

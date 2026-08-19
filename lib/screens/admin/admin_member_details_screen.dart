@@ -70,6 +70,7 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
 
           final user = snapshot.data!;
           final subscriptionActive = user['subscriptionActive'] ?? false;
+          final startDate = user['subscriptionStartDate']?.toDate();
           final expiryDate = user['subscriptionExpiryDate']?.toDate();
           if (subscriptionActive == true &&
               expiryDate != null &&
@@ -96,12 +97,8 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
 
                 if (subscriptionActive == true) ...[
                   Text('Status: Active'),
-                  Text(
-                    'Start: ${DateFormat.MMMEd().format(user['subscriptionStartDate']?.toDate()).toString()}',
-                  ),
-                  Text(
-                    'Expiry: ${DateFormat.MMMEd().format(user['subscriptionExpiryDate']?.toDate()).toString()}',
-                  ),
+                  Text('Start: ${DateFormat.MMMEd().format(startDate!)}'),
+                  Text('Expiry: ${DateFormat.MMMEd().format(expiryDate!)}'),
                   SizedBox(height: 8),
                   Center(
                     child: ElevatedButton(

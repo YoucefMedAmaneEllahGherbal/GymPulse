@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
@@ -62,6 +63,14 @@ class AdminDashboard extends StatelessWidget {
                 );
               },
               child: const Text('Members'),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: Text("Sign out"),
             ),
           ),
         ],
