@@ -1,6 +1,8 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gympulse_app/constants.dart';
 import 'admin_members_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
@@ -36,18 +38,33 @@ class AdminDashboard extends StatelessWidget {
           child: Container(color: kAccentColor, height: 1),
         ),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AdminMembersScreen(),
-              ),
-            );
-          },
-          child: const Text('Members'),
-        ),
+      body: Column(
+        children: [
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('users').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              final docs = snapshot.data!.docs;
+
+              return Padding(padding: const EdgeInsets.all(16));
+            },
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AdminMembersScreen(),
+                  ),
+                );
+              },
+              child: const Text('Members'),
+            ),
+          ),
+        ],
       ),
     );
   }
