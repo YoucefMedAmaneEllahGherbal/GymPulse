@@ -269,7 +269,6 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                     "Attendance",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
-
                   StreamBuilder(
                     stream: attendanceStream,
                     builder: (context, snapshot) {
@@ -278,11 +277,16 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                       }
 
                       final attendanceRecords = snapshot.data!.docs;
-                      for (final record in attendanceRecords) {
-                        print(record.id);
-                      }
 
-                      return Text("Total visits : ${attendanceRecords.length}");
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: attendanceRecords.length,
+
+                        itemBuilder: (context, index) {
+                          final record = attendanceRecords[index];
+                          return ListTile(title: Text(record.id));
+                        },
+                      );
                     },
                   ),
                   const SizedBox(height: 10),
