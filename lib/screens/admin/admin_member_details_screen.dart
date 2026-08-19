@@ -29,7 +29,12 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
         .collection('users')
         .doc(widget.user.id)
         .snapshots();
-
+    final attendanceStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.user.id)
+        .collection('attendance')
+        .orderBy('checkInTime', descending: true)
+        .snapshots();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -263,6 +268,22 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                   const Text(
                     "Attendance",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+
+                  StreamBuilder(
+                    stream: attendanceStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+
+                      final attendanceRecords = snapshot.data!.docs;
+                      for (final record in attendanceRecords) {
+                        print(record.id);
+                      }
+
+                      return Text("Total visits : ${attendanceRecords.length}");
+                    },
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
