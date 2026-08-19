@@ -257,6 +257,47 @@ class _AdminMemberDetailsScreenState extends State<AdminMemberDetailsScreen> {
                     },
                     child: const Text("Activate subscription"),
                   ),
+
+                  const SizedBox(height: 30),
+
+                  const Text(
+                    "Attendance",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final today = DateFormat(
+                        'yyyy-MM-dd',
+                      ).format(DateTime.now());
+
+                      final attendanceRef = FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(widget.user.id)
+                          .collection('attendance')
+                          .doc(today);
+                      final attendanceSnapshot = await attendanceRef.get();
+
+                      if (attendanceSnapshot.exists) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Member Already Checked In today"),
+                          ),
+                        );
+                      } else {
+                        await attendanceRef.set({
+                          'checkInTime': DateTime.now(),
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Member checked successfully"),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Check In Member"),
+                  ),
                 ],
               ],
             ),
