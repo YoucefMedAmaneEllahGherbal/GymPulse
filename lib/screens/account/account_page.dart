@@ -65,10 +65,14 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
       phoneNumber = userData['phoneNumber'];
       isEmailVerified = emailStatus;
       subscriptionActive = userData['subscriptionActive'];
-      subscriptionStartDate = userData['subscriptionStartDate'].toDate();
-      subscriptionExpiryDate = userData['subscriptionExpiryDate'].toDate();
-      isSubscriptionExpired = subscriptionExpiryDate!.isBefore(DateTime.now());
-      remainingDays = subscriptionExpiryDate!.difference(DateTime.now()).inDays;
+      subscriptionStartDate = userData['subscriptionStartDate']?.toDate();
+      subscriptionExpiryDate = userData['subscriptionExpiryDate']?.toDate();
+      isSubscriptionExpired =
+          subscriptionExpiryDate != null &&
+          subscriptionExpiryDate!.isBefore(DateTime.now());
+      remainingDays = subscriptionExpiryDate == null
+          ? null
+          : subscriptionExpiryDate!.difference(DateTime.now()).inDays;
     });
   }
 
@@ -100,6 +104,14 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    final attendanceStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('attendance')
+        .orderBy('checkInTime', descending: true)
+        .snapshots();
     return Scaffold(
       backgroundColor: kBackgroundColor,
 
@@ -196,7 +208,45 @@ class _AccountPageState extends State<AccountPage> with WidgetsBindingObserver {
               remainingDays,
               isSubscriptionExpired,
             ),
+            const SizedBox(height: 18),
 
+            StreamBuilder(
+              stream: attendanceStream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (snapshot.hasError) {
+                  return const Text("Something went wrong");
+                }
+
+                final attendanceRecords = snapshot.data!.docs;
+
+                return Column(
+                  children: [
+                    const Text(
+                      "Attendance",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: kAccentColor,
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    Text(
+                      "Total visits: ${attendanceRecords.length}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: kLightAccentColor,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
             SizedBox(height: 18),
             SecurityCard(isEmailVerified!, () {
               ScaffoldMessenger.of(context).showSnackBar(
